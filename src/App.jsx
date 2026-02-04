@@ -35,7 +35,7 @@ function App() {
         // ...
       }
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <Box maxW="md" mx="auto" mt={10} p={5} boxShadow="lg" borderRadius="lg">

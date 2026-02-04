@@ -1,5 +1,5 @@
 import { Button, HStack, Input } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Notelist } from "./tasklist";
 import axios from "axios";
 import { API } from "../../helpers/constants";
@@ -15,14 +15,9 @@ export function Notes() {
 
   const [task, setTask] = useState("");
 
-  useEffect(() => {
-    if(userDetails) {
-        getTasks();
-    }
-    
-  }, [userDetails]);
+  const getTasks = useCallback(() => {
+    if (!userDetails) return;
 
-  function getTasks() {
     axios.post(`${API}/todo/list`, { uid: userDetails.uid }).then((res) => {
       console.log("resres", res.data);
 
@@ -40,7 +35,14 @@ export function Notes() {
       dispatch(setNotes(Object.assign(segregatedValue, {})))
       // debugger
     });
-  }
+  }, [userDetails, dispatch]);
+
+  useEffect(() => {
+    if(userDetails) {
+        getTasks();
+    }
+
+  }, [userDetails, getTasks]);
   
   const addTask = () => {
     const newTask = { text: task, completed: false, uid: userDetails.uid };

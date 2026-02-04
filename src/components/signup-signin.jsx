@@ -1,6 +1,5 @@
-import { Box, Button, Field, Input, Link, Tabs } from "@chakra-ui/react";
+import { Box, Button, Field, Input, Tabs } from "@chakra-ui/react";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
@@ -64,12 +63,7 @@ export function SignUpSignIn() {
       })
       .catch((error) => {
         // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.error("Google auth error:", error);
         // ...
       });
   }
